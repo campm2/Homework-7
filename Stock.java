@@ -1,3 +1,7 @@
+import java.io.File;
+import java.util.Scanner;
+import java.io.IOException;
+
 public class Stock{
 	private String Name_;
 	private String Symbol_;
@@ -74,17 +78,22 @@ public class Stock{
 		}//end of for loop
 		return sum;
 	}
-	public double average(Stock[]stock, double sum) {
-		sum=sum(stock);
-		double average=sum/stock.length;
+	public double average(Stock[]stock) {
+		double sum=0;
+		double average=0;
+		for(int i=0;i<stock.length;i++) {
+			sum+=stock[i].getPrice();
+			average=sum/stock.length;
+		}//end of for loop
 		return average;
 	}
 	public String Highest(Stock[]stock) {
 		double max=stock[0].getPrice();
 		String highestName=stock[0].getName();
 		for(int i=0;i<stock.length;i++) {
-		
-			if(stock[i].getPrice()>max) {
+			double current=stock[i].getPrice();
+			
+			if(current>max) {
 				max=stock[i].getPrice();
 				highestName=stock[i].getName();	
 			}//end of if
@@ -93,16 +102,31 @@ public class Stock{
 		return highestName;
 	}
 	public String Lowest(Stock[] stock) {
-		double currentPrice=stock[0].getPrice();
+		double min=stock[0].getPrice();
 		String lowestName=stock[0].getName();
 		for(int i=0;i<stock.length;i++) {
-		
-			if(stock[i].getPrice()<currentPrice) {
-				currentPrice=stock[i].getPrice();
+			double current=stock[i].getPrice();
+			
+			if(current<min) {
+				min=stock[i].getPrice();
 				lowestName=stock[i].getName();	
 			}//end of if
 		}//end of for loop
 		return lowestName;
+	}
+	public int Count(String count,String filename) throws IOException {
+		int file_Length=0;
+		File file=new File(filename);
+		Scanner inputFile=new Scanner(file);
+		// to see how many lines there is in the file
+		while(inputFile.hasNext()) {
+			count=inputFile.nextLine();
+			if(!(count.isEmpty())) {
+				file_Length++;
+			}//end of if
+		}//end of while statement
+		inputFile.close();
+		return file_Length;
 	}
 	
 }

@@ -47,42 +47,37 @@ public class StockList {
 		File file=new File(filename);
 		if (file.exists()) {
 			Scanner inputFile=new Scanner(file);
-			// to see how many lines there is in the file
-			/*while(inputFile.hasNext()) {
-				count=inputFile.nextLine();
-				if(!(count.isEmpty())) {
-					file_Length++;
-				}//end of if
-			}//end of while statement
+			file_Length=object.Count(count,filename);
+			
 			if(file_Length>MAX_NUMBER_OF_STOCKS||file_Length<MIN_NUMBER_OF_STOCKS) {
 				System.out.print("Error: Incorrect amount of stocks");
 				inputFile.close();
-			}//end of if*/
+			}//end of if
 				Stock[] stock=new Stock[MAX_NUMBER_OF_STOCKS];
 				while(inputFile.hasNext()) {
-					//System.out.print("here");
 					String fileLine=inputFile.nextLine();
-					if((fileLine!=null) && fileLine.length()>0) {
+					if(!(fileLine.isEmpty()) ) {
 						for(int i=0;i<MAX_NUMBER_OF_STOCKS;i++) {
-							stock[i]=new Stock();
+							stock[i]=new Stock(name,symbol,price);
 							String [] splitFile=fileLine.split(",");
 						     stock[i].setName(splitFile[0]);
 						     stock[i].setSymbol(splitFile[1]);
 						     stock[i].setPrice(Double.parseDouble(splitFile[2]));
+						
 						}
 						
 					}//end of if 
 				}//end of while loop
 				sum=object.sum(stock);
 				System.out.println(sum);
-				stocksAverage=object.average(stock,sum);
+				stocksAverage=object.average(stock);
+				System.out.println(stocksAverage);
 				highestStock=object.Highest(stock);
 				lowestStock=object.Lowest(stock);
 				System.out.println(highestStock);
 				System.out.println(lowestStock);
 				
 			}//end of inside else
-		
 		
 		else {
 			System.out.println("Error: File does not exist");
